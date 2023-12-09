@@ -12,4 +12,5 @@ for all the current commands/systems of Kat.
 
 ## How to run
 - Download the ZIP or checkout the repo
+- Edit `config.json.default` to your liking, rename to `config.json` when finished.
 - Extract and run `npm run dev`. This starts the server in nodemon, which will automatically restart on any code changes.
