@@ -6,6 +6,13 @@ const con = mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${co
 
 const app = express();
 
+app.use(express.json());
+
+app.use((req,res,next) => {
+    console.log(`${Date.now()}  ---  ${req.method} ${req.path} ${JSON.stringify(req.body)}`);
+    next();
+});
+
 function getErrMsgForStatus(statusCode) {
     const msgs = {
         400: "Bad Request",
