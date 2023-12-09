@@ -1,3 +1,4 @@
+const { Long } = require("mongodb");
 const mongoose = require("mongoose");
 
 const memberSchema = new mongoose.Schema({
@@ -11,7 +12,10 @@ const permissionSchema = new mongoose.Schema({
 
 const guildSchema = new mongoose.Schema({
     snowflake: {type: String, required: true},
-    discoveredAt: Date,
+    discovered_at: {
+        type: Number,
+        default: d => Date.now()
+    },
     members: [memberSchema],
     prefix: {type: String, default: "!"},
     owner_id: String,
