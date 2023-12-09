@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Guild } = require("../models");
 
+router.use(require("./middleware/auth"));
 
 router.get("/", async(req, res) => {
     
@@ -11,9 +12,7 @@ router.get("/", async(req, res) => {
     res.json(
         {
             data: a,
-            msg: "guilds",
-            error: null,
-            status: 200
+            msg: "guilds"
         }
         );
 });
@@ -21,15 +20,20 @@ router.get("/", async(req, res) => {
 router.get("/:guildId", async(req, res) => {
     
     let a = await Guild.find({snowflake: req.params.guildId});
-
-    res.json(
-        {
-            data: a,
-            msg: "guild",
-            error: null,
-            status: 200
-        }
+    if (a.length)
+    {
+        return res.json(
+            {
+                data: a,
+                msg: "guild"
+            }
         );
+    }
+
+    return res.status(404).json({
+        data: [],
+        msg: `Guild with snowflake '${req.params.guildId}' not found!`
+    });
 });
 
 module.exports = router;
